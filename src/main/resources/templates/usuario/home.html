@@ -10,10 +10,10 @@
   <title>Finca la Providencia</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
-  <!-- Custom styles for this template -->
-  <link href="css/heroic-features.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{css/heroic-features.css}" rel="stylesheet">
 
   <style>
     /* Cambiar el color del header */
@@ -52,12 +52,14 @@
 
 <body>
 
-  <!-- Navigation -->
-  <div th:include="usuario/template_usuario.html::header">
-	
-	
-	
-  </div>
+
+	<!-- Navigation -->
+
+	<div th:include="usuario/template_usuario.html::header">
+		
+	</div>	
+		
+		
   <!-- Page Content -->
   <div class="container">
 
@@ -71,17 +73,19 @@
     <div class="row text-center">
 
 		<div class="col-lg-3 col-md-6 mb-4" th:each="producto: ${productos}" >
-		   <div class="card h-100">
-		     <img class="card-img-top" th:src="@{/imgflores/{img} (img=${producto.imagen})}" alt="">
-		     <div class="card-body">
-		       <p class="card-text" th:text="${producto.nombre}"></p>
-		     </div>
-		     <div class="card-footer">
-		       <a href="productohome.html" class="btn btn-success">Ver producto</a>
-		     </div>
-		   </div>
-		 </div>
-
+		      <div class="card h-100">
+		        <img class="card-img-top" th:src="@{/imgflores/{img} (img=${producto.imagen})}" alt="">
+		        <div class="card-body">
+		          <p class="card-text" th:text="${producto.nombre}"></p>
+		        </div>
+		        <div class="card-footer">
+		          <a href="productohome.html" class="btn btn-success">Ver producto</a>
+		        </div>
+		      </div>
+		    </div>
+		
+		
+		
     </div>
     <!-- /.row -->
 
@@ -90,15 +94,13 @@
 
   <!-- Footer -->
   <div th:include="usuario/template_usuario.html::footer">
-	
-	
-	
-  </div>
+  </div>	
+
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <script th:src="@{vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+	
 </body>
 
 </html>
