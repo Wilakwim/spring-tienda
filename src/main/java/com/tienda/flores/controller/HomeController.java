@@ -1,6 +1,7 @@
 package com.tienda.flores.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,8 @@ import com.tienda.flores.model.DetalleOrden;
 import com.tienda.flores.model.Orden;
 import com.tienda.flores.model.Producto;
 import com.tienda.flores.model.Usuario;
+import com.tienda.flores.service.IDetalleOrdenService;
+import com.tienda.flores.service.IOrdenService;
 import com.tienda.flores.service.IUsuarioService;
 import com.tienda.flores.service.ProductoService;
 
@@ -34,7 +37,11 @@ public class HomeController {
 	@Autowired
 	private IUsuarioService usuarioService;
 	
-	
+	@Autowired
+	private IOrdenService ordenService;
+
+	@Autowired
+	private IDetalleOrdenService detalleOrdenService;
 	
 	//Almacenar detalles de la orden
 	List<DetalleOrden> detalles= new ArrayList<DetalleOrden>();
@@ -152,5 +159,31 @@ public class HomeController {
     		
     		return "usuario/resumenorden";
 }
+        
+     // guardar la orden
+    	@GetMapping("/saveOrder")
+    	public String saveOrder() {
+    		Date fechaCreacion = new Date();
+    		orden.setFechaCreacion(fechaCreacion);
+    		orden.setNumero(ordenService.generarNumeroOrden());
+    		
+    		//usuario
+    		Usuario usuario =usuarioService.findById(1).get();
+    		
+    		orden.setUsuario(usuario);
+    		ordenService.save(orden);
+    		
+    		//guardar detalles
+    		for (DetalleOrden dt:detalles) {
+    			dt.setOrden(orden);
+    			detalleOrdenService.save(dt);
+    		}
+    		
+    		///limpiar lista y orden
+    		orden = new Orden();
+    		detalles.clear();
+    		
+    		return "redirect:/";
+    	}
         
 }
